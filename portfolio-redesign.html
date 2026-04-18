@@ -153,6 +153,7 @@ const PROJECTS = [
     description: "A Python tool that classifies fast fashion brands by water usage, helping shoppers make informed purchasing decisions directly on Amazon product pages.",
     tags: ["Python", "Sustainability", "Data"], cat: "Software",
     featured: false, year: "2023",
+    video: "images/fast-fashion/video1.mp4",
     stats: [
       { value: "200+",   label: "Brands Indexed" },
       { value: "3L→7kL", label: "Water Range" },
@@ -177,6 +178,41 @@ const PROJECTS = [
     ],
   },
 ];
+
+function ProjectVideo({ src, ratio = "16 / 9" }) {
+  const ref = React.useRef(null);
+
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.play().catch(() => {});
+        } else {
+          el.pause();
+        }
+      },
+      { threshold: 0.25 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <div style={{ position: "relative", aspectRatio: ratio, background: "#000", overflow: "hidden" }}>
+      <video
+        ref={ref}
+        src={src}
+        loop
+        muted
+        playsInline
+        preload="none"
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+      />
+    </div>
+  );
+}
 
 function PhotoCarousel({ photos, ratio = "16 / 9", autoInterval = 4000 }) {
   const [idx, setIdx] = React.useState(0);
@@ -459,10 +495,12 @@ function LapCard({ project, pos }) {
         <div style={{opacity:0.75}}>OPEN TELEMETRY →</div>
       </div>
       <div style={{display:'grid', gridTemplateColumns:isFeatured?'1.4fr 1fr':'1fr', borderTop:'1px solid rgba(255,255,255,0.2)'}}>
-        {project.photos
-          ? <PhotoCarousel photos={project.photos} ratio={isFeatured?"16 / 10":"16 / 9"} />
-          : <Placeholder ratio={isFeatured?"16 / 10":"16 / 9"} tone="navy" label={`${project.slug} hero`}
-              style={{borderRight:isFeatured?'1px solid rgba(255,255,255,0.2)':'none'}}/>
+        {project.video
+          ? <ProjectVideo src={project.video} ratio={isFeatured?"16 / 10":"16 / 9"} />
+          : project.photos
+            ? <PhotoCarousel photos={project.photos} ratio={isFeatured?"16 / 10":"16 / 9"} />
+            : <Placeholder ratio={isFeatured?"16 / 10":"16 / 9"} tone="navy" label={`${project.slug} hero`}
+                style={{borderRight:isFeatured?'1px solid rgba(255,255,255,0.2)':'none'}}/>
         }
         <div style={pw.lapBody}>
           <div style={pw.lapTitle}>{project.title}</div>
