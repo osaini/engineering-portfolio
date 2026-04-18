@@ -164,6 +164,12 @@ const PROJECTS = [
     description: "Full teardown, inspection, and rebuild of a Hyundai Accent 1.6L. Restored compression across all cylinders and eliminated a persistent misfire.",
     tags: ["Automotive", "Mechanical"], cat: "Mechanical",
     featured: false, year: "2024",
+    photos: [
+      "images/engine-rebuild/img1.jpg",
+      "images/engine-rebuild/img2.jpg",
+      "images/engine-rebuild/img3.jpg",
+      "images/engine-rebuild/img4.jpg",
+    ],
     stats: [
       { value: "4",       label: "Cylinders" },
       { value: "142 psi", label: "Restored Comp." },
@@ -171,6 +177,63 @@ const PROJECTS = [
     ],
   },
 ];
+
+function PhotoCarousel({ photos, ratio = "16 / 9", autoInterval = 4000 }) {
+  const [idx, setIdx] = React.useState(0);
+  const [loaded, setLoaded] = React.useState({});
+
+  React.useEffect(() => {
+    const t = setInterval(() => setIdx(i => (i + 1) % photos.length), autoInterval);
+    return () => clearInterval(t);
+  }, [photos.length, autoInterval]);
+
+  const prev = (e) => { e.stopPropagation(); setIdx(i => (i - 1 + photos.length) % photos.length); };
+  const next = (e) => { e.stopPropagation(); setIdx(i => (i + 1) % photos.length); };
+
+  return (
+    <div style={{ position: "relative", aspectRatio: ratio, background: "#000", overflow: "hidden" }}>
+      {photos.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          loading={i === 0 ? "eager" : "lazy"}
+          decoding="async"
+          onLoad={() => setLoaded(l => ({ ...l, [i]: true }))}
+          style={{
+            position: "absolute", inset: 0,
+            width: "100%", height: "100%",
+            objectFit: "cover",
+            imageOrientation: "from-image",
+            opacity: i === idx ? 1 : 0,
+            transition: "opacity 0.5s ease",
+            willChange: "opacity",
+          }}
+          alt={`Engine rebuild photo ${i + 1}`}
+        />
+      ))}
+      {/* prev / next buttons */}
+      <button onClick={prev} style={carouselBtn("left")} aria-label="Previous">&#8592;</button>
+      <button onClick={next} style={carouselBtn("right")} aria-label="Next">&#8594;</button>
+      {/* dot indicators */}
+      <div style={{ position:"absolute", bottom:10, left:0, right:0, display:"flex", justifyContent:"center", gap:6, pointerEvents:"none" }}>
+        {photos.map((_,i) => (
+          <div key={i} style={{ width:6, height:6, borderRadius:"50%", background: i===idx ? "#fff" : "rgba(255,255,255,0.4)", transition:"background 0.3s" }}/>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function carouselBtn(side) {
+  return {
+    position: "absolute", top: "50%", transform: "translateY(-50%)",
+    [side]: 10,
+    background: "rgba(0,0,0,0.45)", border: "none", color: "#fff",
+    width: 32, height: 32, borderRadius: "50%",
+    fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+    zIndex: 2, lineHeight: 1,
+  };
+}
 
 function Placeholder({ label = "project shot", ratio = "16 / 10", tone = "paper", children, style }) {
   const bg = tone === "ink" ? "var(--ink)" : tone === "navy" ? "var(--navy-2)" : "var(--paper-2)";
@@ -217,9 +280,9 @@ function TopStrip() {
   return (
     <div style={pw.topStrip}>
       <span><span style={pw.dot} /> LIVE · PIT WALL TELEMETRY</span>
-      <span>SECTOR 03 · LAP 47 / 58</span>
+      <span>SECTOR 04 · LAP 18 / 100</span>
       <span>DRIVER · <b>OAJ.SAINI</b></span>
-      <span>STATUS · <span style={{color:'var(--accent)'}}>SHIPPING</span></span>
+      <span>STATUS · <span style={{color:'var(--accent)'}}>BUILDING</span></span>
     </div>
   );
 }
@@ -396,8 +459,11 @@ function LapCard({ project, pos }) {
         <div style={{opacity:0.75}}>OPEN TELEMETRY →</div>
       </div>
       <div style={{display:'grid', gridTemplateColumns:isFeatured?'1.4fr 1fr':'1fr', borderTop:'1px solid rgba(255,255,255,0.2)'}}>
-        <Placeholder ratio={isFeatured?"16 / 10":"16 / 9"} tone="navy" label={`${project.slug} hero`}
-          style={{borderRight:isFeatured?'1px solid rgba(255,255,255,0.2)':'none'}}/>
+        {project.photos
+          ? <PhotoCarousel photos={project.photos} ratio={isFeatured?"16 / 10":"16 / 9"} />
+          : <Placeholder ratio={isFeatured?"16 / 10":"16 / 9"} tone="navy" label={`${project.slug} hero`}
+              style={{borderRight:isFeatured?'1px solid rgba(255,255,255,0.2)':'none'}}/>
+        }
         <div style={pw.lapBody}>
           <div style={pw.lapTitle}>{project.title}</div>
           <div style={pw.lapSub}>{project.subtitle}</div>
