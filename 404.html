@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>404 — Off Track · Oaj Saini</title>
+<meta name="description" content="That page went off track. Head back to the pit wall." />
+<meta name="robots" content="noindex" />
+<meta name="theme-color" content="#0a0f1a" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%230a0f1a'/%3E%3Crect%20x='12'%20y='12'%20width='10'%20height='10'%20fill='%23f4f2ec'/%3E%3Crect%20x='22'%20y='22'%20width='10'%20height='10'%20fill='%23f4f2ec'/%3E%3Crect%20x='32'%20y='32'%20width='10'%20height='10'%20fill='%23f4f2ec'/%3E%3Crect%20x='42'%20y='42'%20width='10'%20height='10'%20fill='%23f4f2ec'/%3E%3Cpath%20d='M44%2014%20L20%2050'%20stroke='%23ff5a1f'%20stroke-width='7'%20stroke-linecap='round'/%3E%3C/svg%3E" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: #ff5a1f; --paper: #f4f2ec; --ink: #0a0f1a; }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; height: 100%;
+    background: var(--ink); color: var(--paper);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    min-height: 100%;
+    display: flex; flex-direction: column; justify-content: center;
+    gap: 20px; padding: 40px 24px; max-width: 760px; margin: 0 auto;
+  }
+  .flag {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  h1 {
+    margin: 0; font-size: clamp(64px, 18vw, 160px);
+    font-weight: 600; line-height: 0.88; letter-spacing: -0.04em;
+  }
+  h1 em { font-family: 'Instrument Serif', serif; font-weight: 400; color: var(--accent); }
+  p { margin: 0; font-size: clamp(16px, 2.4vw, 20px); color: rgba(244,242,236,0.6); max-width: 46ch; }
+  .rule { height: 1px; background: rgba(244,242,236,0.15); margin: 4px 0; }
+  .links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+  a.btn {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
+    padding: 13px 20px; border: 1px solid rgba(244,242,236,0.25); color: var(--paper);
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  a.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  a.btn:hover { background: var(--paper); border-color: var(--paper); color: var(--ink); }
+  a.btn.primary:hover { background: #fff; border-color: #fff; color: var(--ink); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="flag">◣ Yellow Flag · Sector 404</div>
+  <h1>Off <em>track</em>.</h1>
+  <div class="rule"></div>
+  <p>That page isn't on this circuit — it may have been moved, renamed, or never existed. Let's get you back to the pit wall.</p>
+  <div class="links">
+    <a class="btn primary" href="/">▸ Back to the garage</a>
+    <a class="btn" href="/#projects">Race log</a>
+    <a class="btn" href="mailto:oajsaini@gmail.com">Box / box ↗</a>
+  </div>
+</main>
+</body>
+</html>

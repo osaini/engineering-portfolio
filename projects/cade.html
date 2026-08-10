@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>C.A.D.E — Computer Aided Driving Emulator · Oaj Saini</title>
+<meta name="description" content="A 3D-printed driving simulator recreating realistic steering, pedal feel and telemetry from off-the-shelf electronics — $46.32 in raw parts, 400+ hours driven." />
+<meta name="author" content="Oaj Saini" />
+<meta name="theme-color" content="#0a0f1a" />
+<link rel="canonical" href="https://engineering-portfolio.vercel.app/projects/cade" />
+
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Oaj Saini — Engineering Portfolio" />
+<meta property="og:title" content="C.A.D.E — Computer Aided Driving Emulator" />
+<meta property="og:description" content="A 3D-printed driving simulator built from off-the-shelf electronics for $46.32 in raw parts. 400+ hours driven, 20+ people impacted." />
+<meta property="og:url" content="https://engineering-portfolio.vercel.app/projects/cade" />
+<meta property="og:image" content="https://engineering-portfolio.vercel.app/images/og-card.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Oaj Saini — engineering portfolio card" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="C.A.D.E — Computer Aided Driving Emulator" />
+<meta name="twitter:description" content="A 3D-printed driving simulator built for $46.32 in raw parts." />
+<meta name="twitter:image" content="https://engineering-portfolio.vercel.app/images/og-card.jpg" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%230a0f1a'/%3E%3Crect%20x='12'%20y='12'%20width='10'%20height='10'%20fill='%23f4f2ec'/%3E%3Crect%20x='22'%20y='22'%20width='10'%20height='10'%20fill='%23f4f2ec'/%3E%3Crect%20x='32'%20y='32'%20width='10'%20height='10'%20fill='%23f4f2ec'/%3E%3Crect%20x='42'%20y='42'%20width='10'%20height='10'%20fill='%23f4f2ec'/%3E%3Cpath%20d='M44%2014%20L20%2050'%20stroke='%23ff5a1f'%20stroke-width='7'%20stroke-linecap='round'/%3E%3C/svg%3E" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" defer integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" defer integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous"></script>
+
+<style>
+  :root {
+    --ink: #0a1628;
+    --paper: #f4f2ec;
+    --paper-2: #ebe8df;
+    --navy: #0e1b33;
+    --navy-2: #162847;
+    --line: rgba(10, 22, 40, 0.12);
+    --line-strong: rgba(10, 22, 40, 0.25);
+    --muted: rgba(10, 22, 40, 0.55);
+    --accent: #ff5a1f;
+  }
+  html, body {
+    margin: 0; padding: 0;
+    background: #0a0f1a;
+    color: #f4f2ec;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  * { box-sizing: border-box; }
+  ::selection { background: var(--accent); color: #fff; }
+  body.dark {
+    --ink: #f4f2ec;
+    --paper: #0a0f1a;
+    --paper-2: #0e1626;
+    --navy: #0a0f1a;
+    --navy-2: #141e33;
+    --line: rgba(244, 242, 236, 0.1);
+    --line-strong: rgba(244, 242, 236, 0.25);
+    --muted: rgba(244, 242, 236, 0.55);
+  }
+  @keyframes pw-ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes pw-blink  { 50% { opacity: 0; } }
+</style>
+
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body class="dark">
+
+<div id="root"></div>
+
+<script src="/assets/projects/cade.js" defer></script>
+
+</body>
+</html>

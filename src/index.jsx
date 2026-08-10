@@ -1,101 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Oaj Saini — Portfolio</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-
-<style>
-  :root {
-    --ink: #0a1628;
-    --paper: #f4f2ec;
-    --paper-2: #ebe8df;
-    --navy: #0e1b33;
-    --navy-2: #162847;
-    --line: rgba(10, 22, 40, 0.12);
-    --line-strong: rgba(10, 22, 40, 0.25);
-    --muted: rgba(10, 22, 40, 0.55);
-    --accent: #ff5a1f;
-  }
-  html, body {
-    margin: 0; padding: 0;
-    background: #0a0f1a;
-    color: #f4f2ec;
-    font-family: 'Space Grotesk', system-ui, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
-  * { box-sizing: border-box; }
-  ::selection { background: var(--accent); color: #fff; }
-
-  body.dark {
-    --ink: #f4f2ec;
-    --paper: #0a0f1a;
-    --paper-2: #0e1626;
-    --navy: #0a0f1a;
-    --navy-2: #141e33;
-    --line: rgba(244, 242, 236, 0.1);
-    --line-strong: rgba(244, 242, 236, 0.25);
-    --muted: rgba(244, 242, 236, 0.55);
-  }
-
-  .tweaks-panel {
-    position: fixed;
-    bottom: 20px; right: 20px;
-    z-index: 100;
-    background: #141e33;
-    border: 1px solid rgba(244,242,236,0.25);
-    border-radius: 4px;
-    padding: 16px 18px;
-    width: 240px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: #f4f2ec;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-  }
-  .tweaks-title {
-    text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;
-    margin-bottom: 14px;
-  }
-  .tweaks-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
-  .tweaks-row:last-child { margin-bottom: 0; }
-  .tweaks-label { color: rgba(244,242,236,0.5); text-transform: uppercase; letter-spacing: 0.06em; font-size: 10px; }
-  .tweaks-swatches { display: flex; gap: 6px; }
-  .tweaks-swatch {
-    width: 24px; height: 24px; border-radius: 2px;
-    border: 1px solid rgba(244,242,236,0.25); cursor: pointer; position: relative;
-  }
-  .tweaks-swatch.active::after {
-    content: ''; position: absolute; inset: -3px;
-    border: 1.5px solid #f4f2ec; border-radius: 3px;
-  }
-  .tweaks-segmented { display: flex; border: 1px solid rgba(244,242,236,0.25); border-radius: 2px; overflow: hidden; }
-  .tweaks-segmented button {
-    flex: 1; padding: 6px 8px; font: inherit; background: transparent;
-    border: none; border-right: 1px solid rgba(244,242,236,0.25); cursor: pointer;
-    text-transform: uppercase; letter-spacing: 0.05em; color: rgba(244,242,236,0.5);
-  }
-  .tweaks-segmented button:last-child { border-right: none; }
-  .tweaks-segmented button.active { background: #f4f2ec; color: #0a0f1a; }
-
-  @keyframes pw-ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-  @keyframes pw-blink  { 50% { opacity: 0; } }
-</style>
-</head>
-<body class="dark">
-
-<div id="root"></div>
-
-<script type="text/babel" data-presets="react">
 const { useState, useEffect } = React;
+
+function useViewportFlags() {
+  const getFlags = () => ({
+    isMobile: window.innerWidth <= 768,
+    isTiny: window.innerWidth <= 480,
+  });
+  const [flags, setFlags] = useState(getFlags);
+
+  useEffect(() => {
+    const onResize = () => setFlags(getFlags());
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  return flags;
+}
+
+function rs(base, flags, mobile = {}, tiny = {}) {
+  return { ...base, ...(flags.isMobile ? mobile : {}), ...(flags.isTiny ? tiny : {}) };
+}
 
 /* ── Data ─────────────────────────────────────── */
 
@@ -179,7 +102,7 @@ const PROJECTS = [
   },
 ];
 
-function ProjectVideo({ src, ratio = "16 / 9" }) {
+function ProjectVideo({ src, ratio = "16 / 9", label = "Project demo video" }) {
   const ref = React.useRef(null);
 
   React.useEffect(() => {
@@ -208,13 +131,15 @@ function ProjectVideo({ src, ratio = "16 / 9" }) {
         muted
         playsInline
         preload="none"
+        aria-label={label}
+        title={label}
         style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
       />
     </div>
   );
 }
 
-function PhotoCarousel({ photos, ratio = "16 / 9", autoInterval = 4000 }) {
+function PhotoCarousel({ photos, ratio = "16 / 9", autoInterval = 4000, label = "Project" }) {
   const [idx, setIdx] = React.useState(0);
   const [loaded, setLoaded] = React.useState({});
 
@@ -244,7 +169,7 @@ function PhotoCarousel({ photos, ratio = "16 / 9", autoInterval = 4000 }) {
             transition: "opacity 0.5s ease",
             willChange: "opacity",
           }}
-          alt={`Engine rebuild photo ${i + 1}`}
+          alt={`${label} — photo ${i + 1} of ${photos.length}`}
         />
       ))}
       {/* prev / next buttons */}
@@ -299,36 +224,46 @@ function Placeholder({ label = "project shot", ratio = "16 / 10", tone = "paper"
 /* ── Pit Wall ─────────────────────────────────── */
 
 function PitWall() {
+  const viewport = useViewportFlags();
   return (
     <div style={pw.root}>
-      <TopStrip />
-      <Hero />
+      <TopStrip viewport={viewport} />
+      <Hero viewport={viewport} />
       <Ticker />
-      <TelemetryBar />
-      <ProjectStack />
-      <AboutTerminal />
-      <FooterStrip />
+      <TelemetryBar viewport={viewport} />
+      <ProjectStack viewport={viewport} />
+      <AboutTerminal viewport={viewport} />
+      <FooterStrip viewport={viewport} />
     </div>
   );
 }
 
-function TopStrip() {
+function TopStrip({ viewport = {} }) {
+  if (viewport.isMobile) {
+    return (
+      <div style={rs(pw.topStrip, viewport, mobile.topStrip, mobileTiny.topStrip)}>
+        <span><span style={pw.dot} /> LIVE / OAJ.SAINI</span>
+        <span>STATUS / <span style={{color:'var(--accent)'}}>BUILDING</span></span>
+      </div>
+    );
+  }
+
   return (
     <div style={pw.topStrip}>
       <span><span style={pw.dot} /> LIVE · PIT WALL TELEMETRY</span>
       <span>SECTOR 04 · LAP 18 / 100</span>
       <span>DRIVER · <b>OAJ.SAINI</b></span>
-      <span>STATUS · <span style={{color:'var(--accent)'}}>BUILDING</span></span>
+      <span>STATUS / <span style={{color:'var(--accent)'}}>BUILDING</span></span>
     </div>
   );
 }
 
-function Hero() {
+function Hero({ viewport }) {
   return (
-    <section style={pw.hero}>
+    <section style={rs(pw.hero, viewport, mobile.hero, mobileTiny.hero)}>
       <Corner tl /><Corner tr /><Corner bl /><Corner br />
-      <div style={pw.heroGrid}>
-        <div style={pw.heroLeft}>
+      <div style={rs(pw.heroGrid, viewport, mobile.heroGrid, mobileTiny.heroGrid)}>
+        <div style={rs(pw.heroLeft, viewport, mobile.heroLeft)}>
           <div style={pw.metaLabel}>◣ DRIVER PROFILE · 2026</div>
           <div style={pw.metaBlock}>
             <div style={pw.metaLine}><span>LOC</span><b>{PERSONAL.location}</b></div>
@@ -340,20 +275,20 @@ function Hero() {
           <Gauge label="COST EFFICIENCY"  value={92} max={100} unit="%" />
         </div>
 
-        <div style={pw.heroCenter}>
-          <div style={pw.nameStack}>
+        <div style={rs(pw.heroCenter, viewport, mobile.heroCenter)}>
+          <h1 style={rs(pw.nameStack, viewport, mobile.nameStack, mobileTiny.nameStack)}>
             <span style={pw.nameFirst}>{PERSONAL.first}</span>
-            <span style={pw.nameSlash}>/</span>
+            <span style={pw.nameSlash} aria-hidden="true">/</span>
             <span style={pw.nameLast}>{PERSONAL.last}</span>
-          </div>
-          <div style={pw.tagline}><em>{PERSONAL.tagline}</em></div>
-          <div style={pw.cta}>
-            <a href="#projects" style={pw.ctaPrimary}><span>▸</span> ENTER THE GARAGE</a>
-            <a href="#contact"  style={pw.ctaGhost}>BOX / BOX ↗</a>
+          </h1>
+          <div style={rs(pw.tagline, viewport, mobile.tagline)}><em>{PERSONAL.tagline}</em></div>
+          <div style={rs(pw.cta, viewport, mobile.cta)}>
+            <a href="#projects" style={rs(pw.ctaPrimary, viewport, mobile.ctaButton)}><span>▸</span> ENTER THE GARAGE</a>
+            <a href="#contact"  style={rs(pw.ctaGhost, viewport, mobile.ctaButton)}>BOX / BOX ↗</a>
           </div>
         </div>
 
-        <div style={pw.heroRight}>
+        <div style={rs(pw.heroRight, viewport, mobile.heroRight)}>
           <Tachometer />
           <div style={{...pw.metaLabel, marginTop:20, textAlign:'right'}}>◢ BUILD TACH · @12K RPM</div>
         </div>
@@ -446,7 +381,7 @@ function Ticker() {
   );
 }
 
-function TelemetryBar() {
+function TelemetryBar({ viewport }) {
   const cells = [
     { k:"AVAILABLE",    v:"SUM 2026", color:"var(--accent)" },
     { k:"PROJECTS LIVE",v:"04" },
@@ -456,58 +391,58 @@ function TelemetryBar() {
     { k:"GPA",          v:"4.0" },
   ];
   return (
-    <div style={pw.telemetry}>
+    <div style={rs(pw.telemetry, viewport, mobile.telemetry)}>
       {cells.map((c,i)=>(
-        <div key={i} style={pw.telemetryCell}>
+        <div key={i} style={rs(pw.telemetryCell, viewport, mobile.telemetryCell)}>
           <div style={pw.telemetryK}>{c.k}</div>
-          <div style={{...pw.telemetryV, color:c.color||'inherit'}}>{c.v}</div>
+          <div style={{...rs(pw.telemetryV, viewport, mobile.telemetryV), color:c.color||'inherit'}}>{c.v}</div>
         </div>
       ))}
     </div>
   );
 }
 
-function ProjectStack() {
+function ProjectStack({ viewport }) {
   return (
-    <section id="projects" style={pw.projectsSection}>
-      <div style={pw.sectionHead}>
+    <section id="projects" style={rs(pw.projectsSection, viewport, mobile.projectsSection, mobileTiny.projectsSection)}>
+      <div style={rs(pw.sectionHead, viewport, mobile.sectionHead)}>
         <div style={pw.sectionTag}>◤ GRID 02</div>
-        <h2 style={pw.sectionTitle}>Race Log</h2>
+        <h2 style={rs(pw.sectionTitle, viewport, mobile.sectionTitle, mobileTiny.sectionTitle)}>Race Log</h2>
         <div style={pw.sectionSub}>Selected builds · oldest lap last</div>
       </div>
-      <div style={pw.lapGrid}>
-        {PROJECTS.map((p,i)=><LapCard key={p.slug} project={p} pos={i+1}/>)}
+      <div style={rs(pw.lapGrid, viewport, mobile.lapGrid)}>
+        {PROJECTS.map((p,i)=><LapCard key={p.slug} project={p} pos={i+1} viewport={viewport}/>)}
       </div>
     </section>
   );
 }
 
-function LapCard({ project, pos }) {
+function LapCard({ project, pos, viewport }) {
   const isFeatured = project.featured;
   return (
-    <article style={{...pw.lapCard, gridColumn:isFeatured?'span 2':'span 1'}}>
-      <div style={pw.lapCardHead}>
+    <article style={{...pw.lapCard, gridColumn:viewport.isMobile ? 'span 1' : (isFeatured?'span 2':'span 1')}}>
+      <div style={rs(pw.lapCardHead, viewport, mobile.lapCardHead)}>
         <div style={pw.lapPos}>P{String(pos).padStart(2,'0')}</div>
         <div>NO. {project.no}</div>
         <div style={{opacity:0.5}}>{project.year}</div>
         <div style={{opacity:0.5}}>· {project.cat}</div>
         <div style={{flex:1}}/>
-        <div style={{opacity:0.75}}>OPEN TELEMETRY →</div>
+        <a href={`projects/${project.slug}.html`} style={{opacity:0.75,color:'inherit',textDecoration:'none'}}>OPEN TELEMETRY →</a>
       </div>
-      <div style={{display:'grid', gridTemplateColumns:isFeatured?'1.4fr 1fr':'1fr', borderTop:'1px solid rgba(255,255,255,0.2)'}}>
+      <div style={{display:'grid', gridTemplateColumns:viewport.isMobile ? '1fr' : (isFeatured?'1.4fr 1fr':'1fr'), borderTop:'1px solid rgba(255,255,255,0.2)'}}>
         {project.video
-          ? <ProjectVideo src={project.video} ratio={isFeatured?"16 / 10":"16 / 9"} />
+          ? <ProjectVideo src={project.video} ratio={isFeatured?"16 / 10":"16 / 9"} label={`${project.title} — demo video`} />
           : project.photos
-            ? <PhotoCarousel photos={project.photos} ratio={isFeatured?"16 / 10":"16 / 9"} />
+            ? <PhotoCarousel photos={project.photos} ratio={isFeatured?"16 / 10":"16 / 9"} label={project.title} />
             : <Placeholder ratio={isFeatured?"16 / 10":"16 / 9"} tone="navy" label={`${project.slug} hero`}
-                style={{borderRight:isFeatured?'1px solid rgba(255,255,255,0.2)':'none'}}/>
+                style={{borderRight:(!viewport.isMobile && isFeatured)?'1px solid rgba(255,255,255,0.2)':'none'}}/>
         }
-        <div style={pw.lapBody}>
-          <div style={pw.lapTitle}>{project.title}</div>
+        <div style={rs(pw.lapBody, viewport, mobile.lapBody)}>
+          <div style={rs(pw.lapTitle, viewport, mobile.lapTitle)}>{project.title}</div>
           <div style={pw.lapSub}>{project.subtitle}</div>
           <p style={pw.lapDesc}>{project.description}</p>
           {project.stats && (
-            <div style={pw.lapStats}>
+            <div style={rs(pw.lapStats, viewport, mobile.lapStats)}>
               {project.stats.map((s,i)=>(
                 <div key={i} style={pw.lapStat}>
                   <div style={pw.lapStatV}>{s.value}</div>
@@ -525,15 +460,15 @@ function LapCard({ project, pos }) {
   );
 }
 
-function AboutTerminal() {
+function AboutTerminal({ viewport }) {
   const grouped = PERSONAL.skills.reduce((acc,s)=>{ (acc[s.cat]=acc[s.cat]||[]).push(s.name); return acc; },{});
   return (
-    <section style={pw.about}>
-      <div style={pw.sectionHead}>
+    <section style={rs(pw.about, viewport, mobile.about, mobileTiny.about)}>
+      <div style={rs(pw.sectionHead, viewport, mobile.sectionHead)}>
         <div style={pw.sectionTag}>◤ GRID 03</div>
-        <h2 style={pw.sectionTitle}>Driver Bio</h2>
+        <h2 style={rs(pw.sectionTitle, viewport, mobile.sectionTitle, mobileTiny.sectionTitle)}>Driver Bio</h2>
       </div>
-      <div style={pw.aboutGrid}>
+      <div style={rs(pw.aboutGrid, viewport, mobile.aboutGrid)}>
         <div style={pw.terminal}>
           <div style={pw.terminalBar}>
             <span style={{...pw.terminalDot,background:'#ff5f57'}}/>
@@ -578,20 +513,20 @@ function AboutTerminal() {
   );
 }
 
-function FooterStrip() {
+function FooterStrip({ viewport = {} }) {
   return (
-    <footer id="contact" style={pw.footer}>
-      <div style={pw.footerTop}>
+    <footer id="contact" style={rs(pw.footer, viewport, mobile.footer)}>
+      <div style={rs(pw.footerTop, viewport, mobile.footerTop)}>
         <div>
           <div style={pw.sectionTag}>◤ GRID 04</div>
-          <h2 style={{...pw.sectionTitle,marginBottom:8}}>Box Box.</h2>
+          <h2 style={{...rs(pw.sectionTitle, viewport, mobile.sectionTitle, mobileTiny.sectionTitle),marginBottom:8}}>Box Box.</h2>
           <p style={pw.footerLead}>Hiring for a mech/EE/embedded internship? I'd love to talk.</p>
-          <div style={pw.footerCTAs}>
-            <a href={`mailto:${PERSONAL.email}`} style={pw.ctaPrimary}><span>✉</span> {PERSONAL.email}</a>
-            <a href={PERSONAL.github} style={pw.ctaGhost}>GITHUB / @{PERSONAL.githubUsername} ↗</a>
+          <div style={rs(pw.footerCTAs, viewport, mobile.footerCTAs)}>
+            <a href={`mailto:${PERSONAL.email}`} style={rs(pw.ctaPrimary, viewport, mobile.ctaButton)}><span>✉</span> {PERSONAL.email}</a>
+            <a href={PERSONAL.github} style={rs(pw.ctaGhost, viewport, mobile.ctaButton)}>GITHUB / @{PERSONAL.githubUsername} ↗</a>
           </div>
         </div>
-        <div style={pw.footerFlag}>
+        <div style={rs(pw.footerFlag, viewport, mobile.footerFlag)}>
           <div style={{display:'flex',height:'100%'}}>
             {Array.from({length:8}).map((_,i)=>(
               <div key={i} style={{flex:1,display:'flex',flexDirection:'column'}}>
@@ -603,7 +538,7 @@ function FooterStrip() {
           </div>
         </div>
       </div>
-      <div style={pw.footerBot}>
+      <div style={rs(pw.footerBot, viewport, mobile.footerBot)}>
         <span>© 2026 OAJ SAINI · PIT WALL v1.0</span>
         <span>MADE IN AUSTIN, TX</span>
         <span>◉ RECRUITING READY</span>
@@ -626,7 +561,7 @@ const pw = {
   metaLine: { display:'flex', justifyContent:'space-between', padding:'8px 0', borderBottom:'1px solid rgba(255,255,255,0.08)', fontFamily:"'JetBrains Mono',monospace", fontSize:11, letterSpacing:'0.05em', textTransform:'uppercase' },
   gaugeLabel: { display:'flex', justifyContent:'space-between', fontFamily:"'JetBrains Mono',monospace", fontSize:10.5, textTransform:'uppercase', letterSpacing:'0.08em', color:'rgba(255,255,255,0.7)', marginBottom:6 },
   gaugeTrack: { display:'flex' },
-  nameStack: { display:'flex', alignItems:'baseline', justifyContent:'center', fontFamily:"'Space Grotesk',sans-serif", fontWeight:600, fontSize:'clamp(60px,12vw,180px)', lineHeight:0.9, letterSpacing:'-0.04em' },
+  nameStack: { display:'flex', alignItems:'baseline', justifyContent:'center', margin:0, fontFamily:"'Space Grotesk',sans-serif", fontWeight:600, fontSize:'clamp(60px,12vw,180px)', lineHeight:0.9, letterSpacing:'-0.04em' },
   nameFirst: { color:'#f4f2ec' },
   nameSlash: { color:'var(--accent)', margin:'0 0.12em', fontStyle:'italic' },
   nameLast: { color:'#f4f2ec', fontStyle:'italic', fontFamily:"'Instrument Serif',serif", fontWeight:400, fontSize:'1em' },
@@ -684,60 +619,53 @@ const pw = {
 
 /* ── App ──────────────────────────────────────── */
 
-const ACCENT_OPTIONS = [
-  { name:'Safety Orange', value:'#ff5a1f' },
-  { name:'Oxide Red',     value:'#c73a20' },
-  { name:'Track Yellow',  value:'#f5c518' },
-  { name:'Grid Cyan',     value:'#2dd4ff' },
-  { name:'Driver Green',  value:'#2fb37a' },
-];
+const mobile = {
+  topStrip: { padding:'10px 18px', gap:12, fontSize:10, letterSpacing:'0.07em', alignItems:'center' },
+  hero: { padding:'36px 18px 32px', minHeight:'auto' },
+  heroGrid: { gridTemplateColumns:'1fr', gap:30, alignItems:'start' },
+  heroLeft: { order:2, width:'100%' },
+  heroCenter: { order:1, textAlign:'left' },
+  heroRight: { display:'none' },
+  nameStack: { justifyContent:'flex-start', fontSize:'clamp(58px, 23vw, 112px)', flexWrap:'wrap', lineHeight:0.92 },
+  tagline: { marginTop:20, marginInline:0, maxWidth:'100%', fontSize:18, lineHeight:1.45 },
+  cta: { marginTop:28, flexDirection:'column', gap:10, alignItems:'stretch' },
+  ctaButton: { width:'100%', justifyContent:'center', minHeight:48, padding:'14px 16px', textAlign:'center', letterSpacing:'0.08em' },
+  telemetry: { gridTemplateColumns:'repeat(2, 1fr)' },
+  telemetryCell: { padding:'16px 18px' },
+  telemetryV: { fontSize:21 },
+  projectsSection: { padding:'56px 18px 28px' },
+  sectionHead: { margin:'0 auto 28px' },
+  sectionTitle: { fontSize:'clamp(34px, 12vw, 52px)', lineHeight:1.02 },
+  lapGrid: { gridTemplateColumns:'1fr', gap:16 },
+  lapCardHead: { alignItems:'flex-start', flexWrap:'wrap', gap:10, padding:'13px 16px', lineHeight:1.35 },
+  lapBody: { padding:'22px 18px', gap:12 },
+  lapTitle: { fontSize:28, lineHeight:1.06 },
+  lapStats: { gridTemplateColumns:'repeat(2, minmax(0, 1fr))' },
+  about: { padding:'56px 18px 28px' },
+  aboutGrid: { gridTemplateColumns:'1fr', gap:18 },
+  footer: { padding:'56px 0 0' },
+  footerTop: { gridTemplateColumns:'1fr', gap:26, padding:'0 18px 44px' },
+  footerCTAs: { flexDirection:'column', alignItems:'stretch' },
+  footerFlag: { maxHeight:180 },
+  footerBot: { flexDirection:'column', gap:8, padding:'16px 18px', lineHeight:1.5 },
+};
+
+const mobileTiny = {
+  topStrip: { padding:'9px 14px', fontSize:9, letterSpacing:'0.05em' },
+  hero: { padding:'30px 14px 28px' },
+  heroGrid: { gap:24 },
+  nameStack: { fontSize:'clamp(52px, 24vw, 92px)' },
+  projectsSection: { padding:'48px 14px 24px' },
+  sectionTitle: { fontSize:'clamp(32px, 13vw, 44px)' },
+  about: { padding:'48px 14px 24px' },
+};
 
 function App() {
-  const [accent, setAccent] = useState('#ff5a1f');
-  const [tweaksVisible, setTweaksVisible] = useState(false);
-
   useEffect(() => {
-    document.documentElement.style.setProperty('--accent', accent);
-  }, [accent]);
-
-  useEffect(() => {
-    const onMsg = (e) => {
-      if (!e.data) return;
-      if (e.data.type === '__activate_edit_mode')   setTweaksVisible(true);
-      if (e.data.type === '__deactivate_edit_mode') setTweaksVisible(false);
-    };
-    window.addEventListener('message', onMsg);
-    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
-    return () => window.removeEventListener('message', onMsg);
+    document.documentElement.style.setProperty('--accent', '#ff5a1f');
   }, []);
 
-  return (
-    <>
-      <PitWall />
-      {tweaksVisible && (
-        <div className="tweaks-panel">
-          <div className="tweaks-title">Tweaks</div>
-          <div className="tweaks-row">
-            <div className="tweaks-label">Accent color</div>
-            <div className="tweaks-swatches">
-              {ACCENT_OPTIONS.map(a => (
-                <div key={a.value}
-                  className={'tweaks-swatch' + (a.value === accent ? ' active' : '')}
-                  style={{background: a.value}}
-                  onClick={() => { setAccent(a.value); window.parent.postMessage({type:'__edit_mode_set_keys',edits:{accent:a.value}},'*'); }}
-                  title={a.name}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
+  return <PitWall />;
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-</script>
-
-</body>
-</html>

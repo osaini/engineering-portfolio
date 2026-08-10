@@ -2,7 +2,6 @@
   "framework": null,
   "buildCommand": null,
   "outputDirectory": ".",
-  "rewrites": [
-    { "source": "/", "destination": "/portfolio-redesign.html" }
-  ]
+  "cleanUrls": true,
+  "trailingSlash": false
 }

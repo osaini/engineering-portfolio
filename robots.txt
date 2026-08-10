@@ -1,0 +1,5 @@
+# Everything is public and crawlable — including AI crawlers.
+User-agent: *
+Allow: /
+
+Sitemap: https://engineering-portfolio.vercel.app/sitemap.xml
