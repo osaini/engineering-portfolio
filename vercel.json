@@ -3,5 +3,9 @@
   "buildCommand": null,
   "outputDirectory": ".",
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/portfolio-redesign.html", "destination": "/", "permanent": true },
+    { "source": "/portfolio-redesign", "destination": "/", "permanent": true }
+  ]
 }
