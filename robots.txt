@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://engineering-portfolio.vercel.app/sitemap.xml
+Sitemap: https://engineering-portfolio-liart.vercel.app/sitemap.xml

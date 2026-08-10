@@ -8,18 +8,18 @@ Contact: oajsaini@gmail.com · GitHub: https://github.com/osaini
 
 ## Projects
 
-- [Drone — 9 Inch FPV Drone](https://engineering-portfolio.vercel.app/projects/fpv-drone) (2025):
+- [Drone — 9 Inch FPV Drone](https://engineering-portfolio-liart.vercel.app/projects/fpv-drone) (2025):
   Production-ready 9-inch FPV drone built for range, reliability and precision. OpenHD digital HD
   telemetry over a long-range RF link, ELRS control at sub-10ms latency, CNC-machined aluminum arms
   and standoffs, and a 2-axis IMU-driven gimbal. Stack: OpenHD, ELRS, CNC, FPV, embedded systems.
-- [C.A.D.E — Computer Aided Driving Emulator](https://engineering-portfolio.vercel.app/projects/cade) (2024):
+- [C.A.D.E — Computer Aided Driving Emulator](https://engineering-portfolio-liart.vercel.app/projects/cade) (2024):
   3D-printed driving simulator recreating realistic steering, pedal feel and telemetry from
   off-the-shelf electronics for $46.32 in raw parts. 400+ hours driven, 20+ people impacted.
   Stack: Arduino, 3D printing, CAD, embedded systems.
-- [Fast Fashion Detector](https://engineering-portfolio.vercel.app/projects/fast-fashion-detector) (2023):
+- [Fast Fashion Detector](https://engineering-portfolio-liart.vercel.app/projects/fast-fashion-detector) (2023):
   Python tool that classifies fast fashion brands by water usage directly on Amazon product pages.
   200+ brands indexed, spanning a 3L–7kL water range. Stack: Python, data, sustainability.
-- [Engine Rebuild — Hyundai Accent 1.6L](https://engineering-portfolio.vercel.app/projects/engine-rebuild) (2024):
+- [Engine Rebuild — Hyundai Accent 1.6L](https://engineering-portfolio-liart.vercel.app/projects/engine-rebuild) (2024):
   Full teardown, inspection and rebuild of a Hyundai Accent 1.6L. Restored 142 psi compression
   across all four cylinders and eliminated a persistent misfire over 80+ shop hours.
   Stack: automotive, mechanical.

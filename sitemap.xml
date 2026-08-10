@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://engineering-portfolio.vercel.app/</loc>
+    <loc>https://engineering-portfolio-liart.vercel.app/</loc>
     <lastmod>2026-08-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://engineering-portfolio.vercel.app/projects/fpv-drone</loc>
+    <loc>https://engineering-portfolio-liart.vercel.app/projects/fpv-drone</loc>
     <lastmod>2026-08-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://engineering-portfolio.vercel.app/projects/cade</loc>
+    <loc>https://engineering-portfolio-liart.vercel.app/projects/cade</loc>
     <lastmod>2026-08-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://engineering-portfolio.vercel.app/projects/engine-rebuild</loc>
+    <loc>https://engineering-portfolio-liart.vercel.app/projects/engine-rebuild</loc>
     <lastmod>2026-08-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://engineering-portfolio.vercel.app/projects/fast-fashion-detector</loc>
+    <loc>https://engineering-portfolio-liart.vercel.app/projects/fast-fashion-detector</loc>
     <lastmod>2026-08-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>

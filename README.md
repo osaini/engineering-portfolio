@@ -41,7 +41,7 @@ Vercel provides via `"cleanUrls": true` in `vercel.json` — mirror that locally
 
 ## Before you deploy
 
-Search-and-replace `https://engineering-portfolio.vercel.app` if the domain changes. It appears in:
+Search-and-replace `https://engineering-portfolio-liart.vercel.app` if the domain changes. It appears in:
 
 - `index.html` and each `projects/*.html` — `canonical`, `og:url`, `og:image`, `twitter:image`, JSON-LD
 - `robots.txt` — the `Sitemap:` line
