@@ -52,6 +52,7 @@ const PROJECTS = [
     description: "A production-ready 9-inch FPV drone engineered from the ground up for range, reliability, and precision. OpenHD handles long-range digital HD telemetry over a robust RF link; ELRS delivers sub-10ms control latency for responsive handling at distance. The frame integrates CNC-machined aluminum arms and standoffs — light enough to matter, stiff enough to survive. A 2-axis gimbal driven by an onboard IMU keeps the camera locked and level at speed.",
     tags: ["OpenHD", "ELRS", "CNC", "FPV", "Embedded"], cat: "Mechatronics",
     featured: true, year: "2025",
+    photo: "images/drone/drone.jpg",
     stats: [
       { value: "9\"",    label: "Props" },
       { value: "<10ms",  label: "RC Latency" },
@@ -181,6 +182,15 @@ function PhotoCarousel({ photos, ratio = "16 / 9", autoInterval = 4000, label = 
           <div key={i} style={{ width:6, height:6, borderRadius:"50%", background: i===idx ? "#fff" : "rgba(255,255,255,0.4)", transition:"background 0.3s" }}/>
         ))}
       </div>
+    </div>
+  );
+}
+
+function ProjectPhoto({ src, ratio = "16 / 10", label = "Project", style }) {
+  return (
+    <div style={{ position: "relative", aspectRatio: ratio, background: "#000", overflow: "hidden", ...style }}>
+      <img src={src} alt={label} decoding="async"
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", imageOrientation: "from-image" }} />
     </div>
   );
 }
@@ -432,6 +442,9 @@ function LapCard({ project, pos, viewport }) {
       <div style={{display:'grid', gridTemplateColumns:viewport.isMobile ? '1fr' : (isFeatured?'1.4fr 1fr':'1fr'), borderTop:'1px solid rgba(255,255,255,0.2)'}}>
         {project.video
           ? <ProjectVideo src={project.video} ratio={isFeatured?"16 / 10":"16 / 9"} label={`${project.title} — demo video`} />
+          : project.photo
+            ? <ProjectPhoto src={project.photo} ratio="6 / 5" label={`${project.title} — ${project.subtitle}`}
+                style={{borderRight:(!viewport.isMobile && isFeatured)?'1px solid rgba(255,255,255,0.2)':'none'}}/>
           : project.photos
             ? <PhotoCarousel photos={project.photos} ratio={isFeatured?"16 / 10":"16 / 9"} label={project.title} />
             : <Placeholder ratio={isFeatured?"16 / 10":"16 / 9"} tone="navy" label={`${project.slug} hero`}

@@ -580,10 +580,18 @@ function ProjectPage() {
       maxWidth: 900,
       margin: '0 auto'
     }
-  }, /*#__PURE__*/React.createElement(Placeholder, {
-    ratio: "16 / 9",
-    tone: "navy",
-    label: "fpv-drone media"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: "../images/drone/drone.jpg",
+    alt: "Assembled 9-inch FPV drone with Raspberry Pi, Pixhawk flight controller, GPS mast and gimbal camera",
+    decoding: "async",
+    style: {
+      display: 'block',
+      width: '100%',
+      height: 'auto',
+      aspectRatio: '2000 / 1659',
+      objectFit: 'cover',
+      background: '#000'
+    }
   }))), /*#__PURE__*/React.createElement("section", {
     style: rs({
       padding: '0 32px 56px'

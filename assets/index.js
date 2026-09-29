@@ -73,6 +73,7 @@ const PROJECTS = [{
   cat: "Mechatronics",
   featured: true,
   year: "2025",
+  photo: "images/drone/drone.jpg",
   stats: [{
     value: "9\"",
     label: "Props"
@@ -265,6 +266,34 @@ function PhotoCarousel({
       transition: "background 0.3s"
     }
   }))));
+}
+function ProjectPhoto({
+  src,
+  ratio = "16 / 10",
+  label = "Project",
+  style
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "relative",
+      aspectRatio: ratio,
+      background: "#000",
+      overflow: "hidden",
+      ...style
+    }
+  }, /*#__PURE__*/React.createElement("img", {
+    src: src,
+    alt: label,
+    decoding: "async",
+    style: {
+      position: "absolute",
+      inset: 0,
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      imageOrientation: "from-image"
+    }
+  }));
 }
 function carouselBtn(side) {
   return {
@@ -810,6 +839,13 @@ function LapCard({
     src: project.video,
     ratio: isFeatured ? "16 / 10" : "16 / 9",
     label: `${project.title} — demo video`
+  }) : project.photo ? /*#__PURE__*/React.createElement(ProjectPhoto, {
+    src: project.photo,
+    ratio: "6 / 5",
+    label: `${project.title} — ${project.subtitle}`,
+    style: {
+      borderRight: !viewport.isMobile && isFeatured ? '1px solid rgba(255,255,255,0.2)' : 'none'
+    }
   }) : project.photos ? /*#__PURE__*/React.createElement(PhotoCarousel, {
     photos: project.photos,
     ratio: isFeatured ? "16 / 10" : "16 / 9",

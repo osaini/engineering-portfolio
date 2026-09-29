@@ -224,7 +224,8 @@ function ProjectPage() {
 
       <section style={rs({ padding:'48px 32px' }, viewport, detailMobile.sectionMedia, detailTiny.sectionMedia)}>
         <div style={{ maxWidth:900, margin:'0 auto' }}>
-          <Placeholder ratio="16 / 9" tone="navy" label="fpv-drone media" />
+          <img src="../images/drone/drone.jpg" alt="Assembled 9-inch FPV drone with Raspberry Pi, Pixhawk flight controller, GPS mast and gimbal camera" decoding="async"
+            style={{ display:'block', width:'100%', height:'auto', aspectRatio:'2000 / 1659', objectFit:'cover', background:'#000' }} />
         </div>
       </section>
 
